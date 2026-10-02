@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Project</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            padding: 40px;
+        }
+
+        .container {
+            width: 450px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+        }
+
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 7px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 12px;
+            background-color: #f39c12;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #d68910;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>Edit Project</h2>
+
+    <form method="POST">
+
+        <label>Project Name</label>
+        <input type="text"
+               name="project_name"
+               value="{{ project.project_name }}"
+               required>
+
+        <label>Client Name</label>
+        <input type="text"
+               name="client_name"
+               value="{{ project.client_name }}"
+               required>
+
+        <label>Start Date</label>
+        <input type="date"
+               name="start_date"
+               value="{{ project.start_date }}"
+               required>
+
+        <label>End Date</label>
+        <input type="date"
+               name="end_date"
+               value="{{ project.end_date }}"
+               required>
+
+        <label>Required Team Size</label>
+        <input type="number"
+               name="required_team_size"
+               value="{{ project.required_team_size }}"
+               min="1"
+               required>
+
+        <button type="submit">
+            Update Project
+        </button>
+
+    </form>
+
+    <a href="/projects" class="back">
+        ← Back to Projects
+    </a>
+
+</div>
+
+</body>
+</html>

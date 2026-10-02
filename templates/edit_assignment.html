@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Resource Allocation</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            padding: 40px;
+        }
+
+        .container {
+            width: 450px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+        }
+
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 7px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .readonly {
+            background-color: #eeeeee;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 12px;
+            background-color: #f39c12;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #d68910;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>Edit Resource Allocation</h2>
+
+    <form method="POST">
+
+        <label>Employee</label>
+
+        <input type="text"
+               value="{{ assignment.employee_name }}"
+               class="readonly"
+               readonly>
+
+
+        <label>Project</label>
+
+        <input type="text"
+               value="{{ assignment.project_name }}"
+               class="readonly"
+               readonly>
+
+
+        <label>Allocation Percentage</label>
+
+        <input type="number"
+               name="allocation_percentage"
+               value="{{ assignment.allocation_percentage }}"
+               min="1"
+               max="100"
+               required>
+
+
+        <label>Assignment Date</label>
+
+        <input type="date"
+               name="assignment_date"
+               value="{{ assignment.assignment_date }}"
+               required>
+
+
+        <button type="submit">
+            Update Allocation
+        </button>
+
+    </form>
+
+    <a href="/assignments" class="back">
+        ← Back to Resource Allocation
+    </a>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Skill Management</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: #f4f6fb;
+        }
+
+        .navbar {
+            background: #1f2937;
+            color: white;
+            padding: 20px 40px;
+        }
+
+        .container {
+            padding: 35px 50px;
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .back {
+            text-decoration: none;
+            color: #2563eb;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            color: #6b7280;
+        }
+
+        .add-btn {
+            background: #2563eb;
+            color: white;
+            padding: 11px 18px;
+            border-radius: 6px;
+            text-decoration: none;
+        }
+
+        .table-container {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #2563eb;
+            color: white;
+            padding: 14px;
+            text-align: left;
+        }
+
+        td {
+            padding: 14px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        tr:hover {
+            background: #f9fafb;
+        }
+
+        .edit {
+            color: #2563eb;
+            text-decoration: none;
+            margin-right: 12px;
+        }
+
+        .delete {
+            color: #dc2626;
+            text-decoration: none;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="navbar">
+
+        <h2>Workforce Planning System</h2>
+
+    </div>
+
+
+    <div class="container">
+
+        <a href="/" class="back">
+            ← Back to Dashboard
+        </a>
+
+
+        <div class="top">
+
+            <div>
+
+                <h1>Skill Management</h1>
+
+                <p class="subtitle">
+                    Manage skills required for workforce planning.
+                </p>
+
+            </div>
+
+            <a href="/skills/add" class="add-btn">
+                + Add Skill
+            </a>
+
+        </div>
+
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Skill Name</th>
+
+                        <th>Category</th>
+
+                        <th>Actions</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for skill in skills %}
+
+                    <tr>
+
+                        <td>{{ skill.skill_id }}</td>
+
+                        <td>{{ skill.skill_name }}</td>
+
+                        <td>{{ skill.skill_category }}</td>
+
+                        <td>
+
+                            <a
+                                class="edit"
+                                href="/skills/edit/{{ skill.skill_id }}"
+                            >
+                                ✏️ Edit
+                            </a>
+
+                            <a
+                                class="delete"
+                                href="/skills/delete/{{ skill.skill_id }}"
+                                onclick="return confirm('Are you sure you want to delete this skill?');"
+                            >
+                                🗑️ Delete
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

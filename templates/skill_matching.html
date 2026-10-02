@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Employee Skill Matching</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+
+        /* ================= HEADER ================= */
+
+        .header {
+            background: linear-gradient(135deg, #1e3a8a, #2563eb, #4f46e5);
+            color: white;
+            padding: 35px 45px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        .header-content {
+            max-width: 1250px;
+            margin: auto;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 15px;
+            opacity: 0.9;
+        }
+
+        /* ================= MAIN ================= */
+
+        .container {
+            max-width: 1250px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* ================= INFO CARD ================= */
+
+        .info-card {
+            background: white;
+            border-radius: 18px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+            border-left: 5px solid #2563eb;
+        }
+
+        .info-card h2 {
+            color: #1e3a8a;
+            margin-bottom: 8px;
+        }
+
+        .info-card p {
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        /* ================= SEARCH ================= */
+
+        .search-box {
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.06);
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid #dbe3ef;
+            border-radius: 12px;
+            font-size: 15px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .search-box input:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+        }
+
+        /* ================= MATCHING GRID ================= */
+
+        .matching-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 22px;
+        }
+
+        /* ================= EMPLOYEE CARD ================= */
+
+        .employee-card {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 6px 22px rgba(0,0,0,0.07);
+            border: 1px solid #e5eaf2;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .employee-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #2563eb, #7c3aed);
+        }
+
+        .employee-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(37,99,235,0.15);
+        }
+
+        /* ================= PROJECT ================= */
+
+        .project-name {
+            color: #1e3a8a;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 18px;
+        }
+
+        /* ================= EMPLOYEE ================= */
+
+        .employee-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 18px;
+        }
+
+        .employee-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 23px;
+        }
+
+        .employee-name {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .department {
+            color: #64748b;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        /* ================= DETAILS ================= */
+
+        .details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .detail-box {
+            background: #f8fafc;
+            padding: 13px;
+            border-radius: 12px;
+        }
+
+        .detail-label {
+            display: block;
+            font-size: 12px;
+            color: #64748b;
+            margin-bottom: 5px;
+        }
+
+        .detail-value {
+            font-weight: bold;
+            color: #1e293b;
+        }
+
+        /* ================= SKILL ================= */
+
+        .skill-section {
+            margin-top: 20px;
+        }
+
+        .skill-name {
+            font-size: 15px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #334155;
+        }
+
+        /* ================= BADGES ================= */
+
+        .badge {
+            display: inline-block;
+            padding: 7px 13px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .advanced {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .intermediate {
+            background: #fef3c7;
+            color: #b45309;
+        }
+
+        .beginner {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        /* ================= SCORE ================= */
+
+        .score-section {
+            margin-top: 20px;
+        }
+
+        .score-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .score-title {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .score {
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+        .progress {
+            height: 9px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #2563eb, #7c3aed);
+            border-radius: 10px;
+        }
+
+        /* ================= REQUIRED ================= */
+
+        .required {
+            margin-top: 15px;
+            padding: 10px 14px;
+            background: #eff6ff;
+            border-radius: 10px;
+            color: #1d4ed8;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        /* ================= EMPTY ================= */
+
+        .empty {
+            background: white;
+            text-align: center;
+            padding: 60px 20px;
+            border-radius: 18px;
+            color: #64748b;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.06);
+        }
+
+        .empty-icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+
+        /* ================= BACK BUTTON ================= */
+
+        .back-section {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .back-btn {
+            display: inline-block;
+            text-decoration: none;
+            background: linear-gradient(135deg, #1e3a8a, #2563eb);
+            color: white;
+            padding: 13px 25px;
+            border-radius: 12px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 18px rgba(37,99,235,0.25);
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media(max-width: 600px) {
+
+            .header {
+                padding: 25px 20px;
+            }
+
+            .header h1 {
+                font-size: 25px;
+            }
+
+            .matching-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .details {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+
+    <div class="header">
+        <div class="header-content">
+
+            <h1>🎯 Employee Skill Matching</h1>
+
+            <p>
+                Find the most suitable available employees
+                based on project skill requirements.
+            </p>
+
+        </div>
+    </div>
+
+
+    <div class="container">
+
+        <!-- INFO -->
+
+        <div class="info-card">
+
+            <h2>🤖 Smart Resource Matching</h2>
+
+            <p>
+                This module identifies available employees whose
+                skills match the requirements of different projects.
+                Employees are ranked using their proficiency level
+                and experience.
+            </p>
+
+        </div>
+
+
+        <!-- SEARCH -->
+
+        <div class="search-box">
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="🔍 Search project, skill, employee or department..."
+                onkeyup="searchEmployees()"
+            >
+
+        </div>
+
+
+        {% if matching_data %}
+
+        <div class="matching-grid" id="matchingGrid">
+
+            {% for row in matching_data %}
+
+            <div class="employee-card">
+
+                <!-- PROJECT -->
+
+                <div class="project-name">
+                    📁 {{ row.project_name }}
+                </div>
+
+
+                <!-- EMPLOYEE -->
+
+                <div class="employee-header">
+
+                    <div class="employee-icon">
+                        👤
+                    </div>
+
+                    <div>
+
+                        <div class="employee-name">
+                            {{ row.employee_name }}
+                        </div>
+
+                        <div class="department">
+                            {{ row.department }}
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SKILL -->
+
+                <div class="skill-section">
+
+                    <div class="skill-name">
+                        💡 Required Skill: {{ row.skill_name }}
+                    </div>
+
+                    {% if row.proficiency_level == "Advanced" %}
+
+                        <span class="badge advanced">
+                            ⭐ Advanced
+                        </span>
+
+                    {% elif row.proficiency_level == "Intermediate" %}
+
+                        <span class="badge intermediate">
+                            ⚡ Intermediate
+                        </span>
+
+                    {% else %}
+
+                        <span class="badge beginner">
+                            🌱 Beginner
+                        </span>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- DETAILS -->
+
+                <div class="details">
+
+                    <div class="detail-box">
+
+                        <span class="detail-label">
+                            Experience
+                        </span>
+
+                        <span class="detail-value">
+                            {{ row.experience_years }} Years
+                        </span>
+
+                    </div>
+
+
+                    <div class="detail-box">
+
+                        <span class="detail-label">
+                            Required Employees
+                        </span>
+
+                        <span class="detail-value">
+                            {{ row.required_count }}
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SCORE -->
+
+                <div class="score-section">
+
+                    <div class="score-header">
+
+                        <span class="score-title">
+                            Skill Match Score
+                        </span>
+
+                        <span class="score">
+                            {{ row.skill_score }}/3
+                        </span>
+
+                    </div>
+
+                    <div class="progress">
+
+                        <div
+                            class="progress-bar"
+                            style="width: {{ (row.skill_score / 3 * 100) }}%;"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- REQUIRED -->
+
+                <div class="required">
+
+                    🎯 Project needs
+                    <strong>{{ row.required_count }}</strong>
+                    employee(s) with this skill
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        {% else %}
+
+        <div class="empty">
+
+            <div class="empty-icon">
+                🔍
+            </div>
+
+            <h2>No Matching Employees Found</h2>
+
+            <p>
+                There are currently no available employees
+                matching the project requirements.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+
+        <!-- BACK -->
+
+        <div class="back-section">
+
+            <a
+                href="{{ url_for('home') }}"
+                class="back-btn"
+            >
+                ← Back to Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- SEARCH SCRIPT -->
+
+    <script>
+
+        function searchEmployees() {
+
+            let input =
+                document
+                .getElementById("searchInput")
+                .value
+                .toLowerCase();
+
+            let cards =
+                document
+                .querySelectorAll(".employee-card");
+
+            cards.forEach(function(card) {
+
+                let text =
+                    card.innerText.toLowerCase();
+
+                if (text.includes(input)) {
+
+                    card.style.display = "block";
+
+                } else {
+
+                    card.style.display = "none";
+
+                }
+
+            });
+
+        }
+
+    </script>
+
+</body>
+</html>

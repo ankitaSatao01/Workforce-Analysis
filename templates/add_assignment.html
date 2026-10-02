@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Assign Employee</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            padding: 40px;
+        }
+
+        .container {
+            width: 450px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+        }
+
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        select,
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 7px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 12px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>Assign Employee to Project</h2>
+
+    <form method="POST">
+
+        <label>Employee</label>
+
+        <select name="employee_id" required>
+
+            <option value="">-- Select Employee --</option>
+
+            {% for employee in employees %}
+
+                <option value="{{ employee.employee_id }}">
+                    {{ employee.employee_name }}
+                </option>
+
+            {% endfor %}
+
+        </select>
+
+
+        <label>Project</label>
+
+        <select name="project_id" required>
+
+            <option value="">-- Select Project --</option>
+
+            {% for project in projects %}
+
+                <option value="{{ project.project_id }}">
+                    {{ project.project_name }}
+                </option>
+
+            {% endfor %}
+
+        </select>
+
+
+        <label>Allocation Percentage</label>
+
+        <input type="number"
+               name="allocation_percentage"
+               min="1"
+               max="100"
+               value="100"
+               required>
+
+
+        <label>Assignment Date</label>
+
+        <input type="date"
+               name="assignment_date"
+               required>
+
+
+        <button type="submit">
+            Assign Employee
+        </button>
+
+    </form>
+
+    <a href="/assignments" class="back">
+        ← Back to Resource Allocation
+    </a>
+
+</div>
+
+</body>
+</html>

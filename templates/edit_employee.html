@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Employee</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: #f4f6fb;
+        }
+
+        .navbar {
+            background: #1f2937;
+            color: white;
+            padding: 20px 40px;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: 40px auto;
+            background: white;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .back {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="navbar">
+        <h2>Workforce Planning System</h2>
+    </div>
+
+
+    <div class="container">
+
+        <a href="/employees" class="back">
+            ← Back to Employees
+        </a>
+
+        <h1>Edit Employee</h1>
+
+
+        <form method="POST">
+
+            <label>Employee Name</label>
+
+            <input
+                type="text"
+                name="employee_name"
+                value="{{ employee.employee_name }}"
+                required
+            >
+
+
+            <label>Email</label>
+
+            <input
+                type="email"
+                name="email"
+                value="{{ employee.email }}"
+                required
+            >
+
+
+            <label>Department</label>
+
+            <input
+                type="text"
+                name="department"
+                value="{{ employee.department }}"
+                required
+            >
+
+
+            <label>Experience (Years)</label>
+
+            <input
+                type="number"
+                name="experience_years"
+                step="0.1"
+                min="0"
+                value="{{ employee.experience_years }}"
+                required
+            >
+
+
+            <label>Availability Status</label>
+
+            <select name="availability_status">
+
+                <option
+                    value="Available"
+                    {% if employee.availability_status == 'Available' %}selected{% endif %}
+                >
+                    Available
+                </option>
+
+                <option
+                    value="Assigned"
+                    {% if employee.availability_status == 'Assigned' %}selected{% endif %}
+                >
+                    Assigned
+                </option>
+
+                <option
+                    value="On Leave"
+                    {% if employee.availability_status == 'On Leave' %}selected{% endif %}
+                >
+                    On Leave
+                </option>
+
+            </select>
+
+
+            <button type="submit">
+                Update Employee
+            </button>
+
+        </form>
+
+    </div>
+
+</body>
+
+</html>

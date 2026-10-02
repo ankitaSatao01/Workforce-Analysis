@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Employee Skill</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            padding: 40px;
+        }
+
+        .container {
+            width: 450px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+        }
+
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 7px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 12px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>Add Employee Skill</h2>
+
+    <form method="POST">
+
+        <label>Employee</label>
+
+        <select name="employee_id" required>
+
+            <option value="">-- Select Employee --</option>
+
+            {% for employee in employees %}
+                <option value="{{ employee.employee_id }}">
+                    {{ employee.employee_name }}
+                </option>
+            {% endfor %}
+
+        </select>
+
+
+        <label>Skill</label>
+
+        <select name="skill_id" required>
+
+            <option value="">-- Select Skill --</option>
+
+            {% for skill in skills %}
+                <option value="{{ skill.skill_id }}">
+                    {{ skill.skill_name }}
+                </option>
+            {% endfor %}
+
+        </select>
+
+
+        <label>Proficiency Level</label>
+
+        <select name="proficiency_level" required>
+
+            <option value="Beginner">Beginner</option>
+            <option value="Intermediate">Intermediate</option>
+            <option value="Advanced">Advanced</option>
+
+        </select>
+
+
+        <button type="submit">
+            Add Skill
+        </button>
+
+    </form>
+
+    <a href="/employee-skills" class="back">
+        ← Back to Employee Skills
+    </a>
+
+</div>
+
+</body>
+</html>

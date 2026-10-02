@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Workforce Planning System</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6fb;
+            color: #222;
+        }
+
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        .navbar {
+            background: #1f2937;
+            color: white;
+            padding: 20px 40px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h2 {
+            font-size: 22px;
+        }
+
+        .navbar span {
+            font-size: 14px;
+            color: #d1d5db;
+        }
+
+
+        /* =========================
+           MAIN CONTAINER
+        ========================= */
+
+        .container {
+            padding: 35px 50px;
+            max-width: 1400px;
+            margin: auto;
+        }
+
+
+        /* =========================
+           WELCOME
+        ========================= */
+
+        .welcome {
+            margin-bottom: 30px;
+        }
+
+        .welcome h1 {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .welcome p {
+            color: #6b7280;
+        }
+
+
+        /* =========================
+           STATISTICS CARDS
+        ========================= */
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 35px;
+        }
+
+
+        .card,
+        .forecast-card {
+
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 14px;
+
+            box-shadow:
+                0 4px 15px rgba(0,0,0,0.08);
+
+            transition: 0.2s;
+
+        }
+
+
+        .card:hover,
+        .forecast-card:hover {
+
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 7px 20px rgba(0,0,0,0.12);
+
+        }
+
+
+        .card h3,
+        .forecast-card h3 {
+
+            color: #6b7280;
+
+            font-size: 15px;
+
+            margin-bottom: 12px;
+
+        }
+
+
+        .card .number,
+        .forecast-number {
+
+            font-size: 32px;
+
+            font-weight: bold;
+
+            color: #2563eb;
+
+        }
+
+
+        /* =========================
+           WORKFORCE INSIGHTS
+        ========================= */
+
+        .quick-modules {
+
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 20px;
+
+            margin-bottom: 40px;
+
+        }
+
+
+        .module-card {
+
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 14px;
+
+            box-shadow:
+                0 4px 15px rgba(0,0,0,0.08);
+
+            transition: 0.2s;
+
+        }
+
+
+        .module-card:hover {
+
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 7px 20px rgba(0,0,0,0.12);
+
+        }
+
+
+        .module-card h3 {
+
+            margin-bottom: 10px;
+
+            font-size: 18px;
+
+        }
+
+
+        .module-card p {
+
+            color: #6b7280;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+
+            margin-bottom: 18px;
+
+        }
+
+
+        .module-card a {
+
+            display: inline-block;
+
+            text-decoration: none;
+
+            background: #2563eb;
+
+            color: white;
+
+            padding: 9px 15px;
+
+            border-radius: 7px;
+
+            font-size: 14px;
+
+            transition: 0.2s;
+
+        }
+
+
+        .module-card a:hover {
+
+            background: #1d4ed8;
+
+        }
+
+
+        /* =========================
+           SECTION TITLE
+        ========================= */
+
+        .section-title {
+
+            margin-bottom: 20px;
+
+            font-size: 22px;
+
+        }
+
+
+        /* =========================
+           SYSTEM MODULES
+        ========================= */
+
+        .modules {
+
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 20px;
+
+            margin-bottom: 40px;
+
+        }
+
+
+        .module {
+
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 14px;
+
+            box-shadow:
+                0 4px 15px rgba(0,0,0,0.08);
+
+            transition: 0.2s;
+
+        }
+
+
+        .module:hover {
+
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 7px 20px rgba(0,0,0,0.12);
+
+        }
+
+
+        .module h3 {
+
+            margin-bottom: 10px;
+
+            font-size: 18px;
+
+        }
+
+
+        .module p {
+
+            color: #6b7280;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+
+            min-height: 45px;
+
+        }
+
+
+        .module button {
+
+            margin-top: 15px;
+
+            padding: 9px 15px;
+
+            border: none;
+
+            border-radius: 6px;
+
+            background: #2563eb;
+
+            color: white;
+
+            cursor: pointer;
+
+            font-size: 14px;
+
+        }
+
+
+        .module button:hover {
+
+            background: #1d4ed8;
+
+        }
+
+
+        .module a {
+
+            text-decoration: none;
+
+        }
+
+
+        /* =========================
+           AI FORECAST SUMMARY
+        ========================= */
+
+        .forecast-section {
+
+            margin-top: 10px;
+
+        }
+
+
+        .forecast-table-card {
+
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 14px;
+
+            box-shadow:
+                0 4px 15px rgba(0,0,0,0.08);
+
+            margin-bottom: 35px;
+
+            overflow-x: auto;
+
+        }
+
+
+        .forecast-table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+        }
+
+
+        .forecast-table th,
+        .forecast-table td {
+
+            padding: 14px;
+
+            text-align: left;
+
+            border-bottom: 1px solid #eee;
+
+        }
+
+
+        .forecast-table th {
+
+            background: #f5f7fb;
+
+            font-weight: 600;
+
+        }
+
+
+        .forecast-table td strong {
+
+            font-size: 18px;
+
+            color: #2563eb;
+
+        }
+
+
+        .forecast-button {
+
+            margin-top: 20px;
+
+        }
+
+
+        .forecast-button a {
+
+            text-decoration: none;
+
+            padding: 10px 18px;
+
+            border-radius: 8px;
+
+            background: #4f46e5;
+
+            color: white;
+
+            display: inline-block;
+
+        }
+
+
+        .forecast-button a:hover {
+
+            background: #4338ca;
+
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 1000px) {
+
+            .cards {
+
+                grid-template-columns: repeat(2, 1fr);
+
+            }
+
+            .quick-modules {
+
+                grid-template-columns: repeat(2, 1fr);
+
+            }
+
+            .modules {
+
+                grid-template-columns: repeat(2, 1fr);
+
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .navbar {
+
+                padding: 18px 20px;
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 5px;
+
+            }
+
+
+            .container {
+
+                padding: 25px;
+
+            }
+
+
+            .cards {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .quick-modules {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .modules {
+
+                grid-template-columns: 1fr;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         NAVBAR
+    ========================= -->
+
+    <div class="navbar">
+
+        <h2>
+            Workforce Planning System
+        </h2>
+
+        <span>
+            AI-Based Resource Management
+        </span>
+
+    </div>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================= -->
+
+    <div class="container">
+
+
+        <!-- =========================
+             WELCOME
+        ========================= -->
+
+        <div class="welcome">
+
+            <h1>
+                Dashboard
+            </h1>
+
+            <p>
+                Monitor employees, skills, projects and workforce demand.
+            </p>
+
+        </div>
+
+
+        <!-- =========================
+             STATISTICS
+        ========================= -->
+
+        <div class="cards">
+
+
+            <!-- Total Employees -->
+
+            <div class="card">
+
+                <h3>
+                    👥 Total Employees
+                </h3>
+
+                <div class="number">
+                    {{ total_employees }}
+                </div>
+
+            </div>
+
+
+            <!-- Total Skills -->
+
+            <div class="card">
+
+                <h3>
+                    🛠️ Total Skills
+                </h3>
+
+                <div class="number">
+                    {{ total_skills }}
+                </div>
+
+            </div>
+
+
+            <!-- Total Projects -->
+
+            <div class="card">
+
+                <h3>
+                    📁 Total Projects
+                </h3>
+
+                <div class="number">
+                    {{ total_projects }}
+                </div>
+
+            </div>
+
+
+            <!-- Available Employees -->
+
+            <div class="card">
+
+                <h3>
+                    👨‍💻 Available Employees
+                </h3>
+
+                <div class="number">
+                    {{ available_employees }}
+                </div>
+
+            </div>
+
+
+            <!-- AI Forecasts -->
+
+            <div class="forecast-card">
+
+                <h3>
+                    🤖 AI Forecasts
+                </h3>
+
+                <div class="forecast-number">
+                    {{ total_forecasts }}
+                </div>
+
+            </div>
+
+
+            <!-- Average Predicted Demand -->
+
+            <div class="forecast-card">
+
+                <h3>
+                    📈 Average Predicted Demand
+                </h3>
+
+                <div class="forecast-number">
+                    {{ average_demand }}
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =========================
+             WORKFORCE INSIGHTS
+        ========================= -->
+
+        <h2 class="section-title">
+            📊 Workforce Insights
+        </h2>
+
+
+        <div class="quick-modules">
+
+
+            <!-- Resource Gap -->
+
+            <div class="module-card">
+
+                <h3>
+                    📊 Resource Gap Analysis
+                </h3>
+
+                <p>
+                    Identify skill-wise employee shortages
+                    and workforce requirements.
+                </p>
+
+                <a href="{{ url_for('resource_gap') }}">
+                    Analyze Resource Gap →
+                </a>
+
+            </div>
+
+
+            <!-- Future Workforce Gap -->
+
+            <div class="module-card">
+
+                <h3>
+                    🔮 Future Workforce Gap
+                </h3>
+
+                <p>
+                    Use AI forecasts to identify future
+                    employee requirements by skill.
+                </p>
+
+                <a href="{{ url_for('future_workforce_gap') }}">
+                    View Future Gap →
+                </a>
+
+            </div>
+
+
+            <!-- Workforce Analytics -->
+
+            <div class="module-card">
+
+                <h3>
+                    📊 Workforce Analytics
+                </h3>
+
+                <p>
+                    View workforce demand trends,
+                    AI forecasts and resource gap analytics.
+                </p>
+
+                <a href="{{ url_for('analytics') }}">
+                    View Analytics →
+                </a>
+
+            </div>
+
+
+            <!-- Employee Skill Matching -->
+
+            <div class="module-card">
+
+                <h3>
+                    🎯 Employee Skill Matching
+                </h3>
+
+                <p>
+                    Find available employees whose skills
+                    match project requirements.
+                </p>
+
+                <a href="{{ url_for('skill_matching') }}">
+                    Find Matching Employees →
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =========================
+             SYSTEM MODULES
+        ========================= -->
+
+        <h2 class="section-title">
+            ⚙️ System Modules
+        </h2>
+
+
+        <div class="modules">
+
+
+            <!-- Employee Management -->
+
+            <div class="module">
+
+                <h3>
+                    👥 Employee Management
+                </h3>
+
+                <p>
+                    Add, view and manage employees
+                    and their availability.
+                </p>
+
+                <a href="{{ url_for('employees') }}">
+
+                    <button>
+                        Open
+                    </button>
+
+                </a>
+
+            </div>
+
+
+            <!-- Skill Management -->
+
+            <div class="module">
+
+                <h3>
+                    🛠️ Skill Management
+                </h3>
+
+                <p>
+                    Manage employee skills and
+                    proficiency levels.
+                </p>
+
+                <a href="{{ url_for('skills') }}">
+
+                    <button>
+                        Open
+                    </button>
+
+                </a>
+
+            </div>
+
+
+            <!-- Project Management -->
+
+            <div class="module">
+
+                <h3>
+                    📁 Project Management
+                </h3>
+
+                <p>
+                    Manage projects and required skills.
+                </p>
+
+                <a href="{{ url_for('projects') }}">
+
+                    <button>
+                        Open
+                    </button>
+
+                </a>
+
+            </div>
+            <div class="module-card">
+    <h3>
+        📋 Project Requirements
+    </h3>
+
+    <p>
+        Define the skills and number of employees required for each project.
+    </p>
+
+    <a href="{{ url_for('project_requirements') }}">
+        Manage Requirements →
+    </a>
+</div>
+
+
+            <!-- Resource Allocation -->
+
+            <div class="module">
+
+                <h3>
+                    🔗 Resource Allocation
+                </h3>
+
+                <p>
+                    Assign employees to projects
+                    according to requirements.
+                </p>
+
+                <a href="{{ url_for('assignments') }}">
+
+                    <button>
+                        Open
+                    </button>
+
+                </a>
+
+            </div>
+
+
+            <!-- Workforce Demand -->
+
+            <div class="module">
+
+                <h3>
+                    📊 Workforce Demand
+                </h3>
+
+                <p>
+                    Analyze historical workforce
+                    demand data.
+                </p>
+
+                <a href="{{ url_for('workforce_demand') }}">
+
+                    <button>
+                        Open
+                    </button>
+
+                </a>
+
+            </div>
+
+
+            <!-- AI Forecasting -->
+
+            <div class="module">
+
+                <h3>
+                    🤖 AI Forecasting
+                </h3>
+
+                <p>
+                    Predict future workforce demand
+                    using machine learning.
+                </p>
+
+                <a href="{{ url_for('forecasts') }}">
+
+                    <button>
+                        Open
+                    </button>
+
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =========================
+             AI FORECAST SUMMARY
+        ========================= -->
+
+        <div class="forecast-section">
+
+
+            <h2 class="section-title">
+                🤖 AI Forecast Summary
+            </h2>
+
+
+            <div class="forecast-table-card">
+
+
+                <table class="forecast-table">
+
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Skill
+                            </th>
+
+                            <th>
+                                Forecast Month
+                            </th>
+
+                            <th>
+                                Predicted Demand
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+
+                        {% for forecast in forecast_summary %}
+
+                        <tr>
+
+                            <td>
+                                {{ forecast.skill_name }}
+                            </td>
+
+                            <td>
+                                {{ forecast.forecast_month }}
+                            </td>
+
+                            <td>
+
+                                <strong>
+                                    {{ forecast.predicted_demand }}
+                                </strong>
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+
+                    </tbody>
+
+
+                </table>
+
+
+                <div class="forecast-button">
+
+                    <a href="{{ url_for('forecasts') }}">
+                        View Detailed Forecasts →
+                    </a>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</body>
+
+</html>

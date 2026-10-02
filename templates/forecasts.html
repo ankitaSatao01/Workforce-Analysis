@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>AI Workforce Forecast</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            padding: 30px;
+        }
+
+        .container {
+            width: 90%;
+            margin: auto;
+        }
+
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        .info {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.10);
+        }
+
+        .chart-box {
+            background-color: white;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.10);
+        }
+
+        .chart-container {
+            width: 80%;
+            height: 400px;
+            margin: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.10);
+        }
+
+        th {
+            background-color: #34495e;
+            color: white;
+            padding: 12px;
+        }
+
+        td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .prediction {
+            font-weight: bold;
+        }
+
+        .model {
+            font-weight: bold;
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #34495e;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>🤖 AI Workforce Demand Forecast</h2>
+
+    <div class="info">
+
+        <h3>Forecast Information</h3>
+
+        <p>
+            The system uses historical workforce demand data
+            and Linear Regression to predict future workforce
+            requirements.
+        </p>
+
+    </div>
+
+
+    <!-- FORECAST CHART -->
+
+    <div class="chart-box">
+
+        <h3>Predicted Workforce Demand</h3>
+
+        <div class="chart-container">
+
+            <canvas id="forecastChart"></canvas>
+
+        </div>
+
+    </div>
+
+
+    <!-- FORECAST TABLE -->
+
+    <table>
+
+        <tr>
+
+            <th>Forecast ID</th>
+
+            <th>Forecast Month</th>
+
+            <th>Skill</th>
+
+            <th>Predicted Demand</th>
+
+            <th>AI Model</th>
+
+        </tr>
+
+        {% for forecast in forecasts %}
+
+        <tr>
+
+            <td>
+                {{ forecast.forecast_id }}
+            </td>
+
+            <td>
+                {{ forecast.forecast_month }}
+            </td>
+
+            <td>
+                {{ forecast.skill_name }}
+            </td>
+
+            <td class="prediction">
+                {{ forecast.predicted_demand }}
+            </td>
+
+            <td class="model">
+                {{ forecast.model_name }}
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+
+    <a href="/" class="back">
+        ← Back to Dashboard
+    </a>
+
+</div>
+
+
+<script>
+
+    const skillNames = [
+        {% for forecast in forecasts %}
+            "{{ forecast.skill_name }}",
+        {% endfor %}
+    ];
+
+    const predictedDemand = [
+        {% for forecast in forecasts %}
+            {{ forecast.predicted_demand }},
+        {% endfor %}
+    ];
+
+
+    const ctx = document
+        .getElementById("forecastChart")
+        .getContext("2d");
+
+
+    new Chart(ctx, {
+
+        type: "bar",
+
+        data: {
+
+            labels: skillNames,
+
+            datasets: [{
+
+                label: "Predicted Employees",
+
+                data: predictedDemand
+
+            }]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            scales: {
+
+                y: {
+
+                    beginAtZero: true,
+
+                    title: {
+
+                        display: true,
+
+                        text: "Number of Employees"
+
+                    }
+
+                },
+
+                x: {
+
+                    title: {
+
+                        display: true,
+
+                        text: "Skills"
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    });
+
+</script>
+
+</body>
+
+</html>

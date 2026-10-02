@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Resource Gap Analysis</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6fb;
+            margin: 0;
+            padding: 30px;
+            color: #222;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 30px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-top: 8px;
+        }
+
+        .back-button {
+            text-decoration: none;
+            background: #2563eb;
+            color: white;
+            padding: 11px 18px;
+            border-radius: 8px;
+        }
+
+        .back-button:hover {
+            opacity: 0.9;
+        }
+
+        .card {
+            background: white;
+            border-radius: 14px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #f1f5f9;
+            padding: 15px;
+            text-align: left;
+            font-size: 15px;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        tr:hover {
+            background: #f8fafc;
+        }
+
+        .required {
+            font-weight: bold;
+        }
+
+        .allocated {
+            font-weight: bold;
+        }
+
+        .gap {
+            font-weight: bold;
+            color: #dc2626;
+        }
+
+        .no-gap {
+            font-weight: bold;
+            color: #16a34a;
+        }
+
+        .info-box {
+            margin-top: 25px;
+            padding: 18px;
+            background: #eff6ff;
+            border-left: 5px solid #2563eb;
+            border-radius: 8px;
+        }
+
+        .info-box strong {
+            color: #1d4ed8;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+
+        <div>
+            <h1>📊 Resource Gap Analysis</h1>
+
+            <div class="subtitle">
+                Compare required employees with currently allocated employees.
+            </div>
+        </div>
+
+        <a href="{{ url_for('home') }}" class="back-button">
+            ← Dashboard
+        </a>
+
+    </div>
+
+
+    <div class="card">
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>Skill</th>
+                    <th>Required Employees</th>
+                    <th>Allocated Employees</th>
+                    <th>Resource Gap</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for gap in resource_gaps %}
+
+                <tr>
+
+                    <td>
+                        <strong>{{ gap.skill_name }}</strong>
+                    </td>
+
+                    <td class="required">
+                        {{ gap.required_employees }}
+                    </td>
+
+                    <td class="allocated">
+                        {{ gap.allocated_employees }}
+                    </td>
+
+                    <td>
+
+                        {% if gap.resource_gap > 0 %}
+
+                            <span class="gap">
+                                {{ gap.resource_gap }}
+                            </span>
+
+                        {% else %}
+
+                            <span class="no-gap">
+                                0
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+
+        <div class="info-box">
+
+            <strong>What does Resource Gap mean?</strong>
+
+            <br><br>
+
+            Resource Gap =
+            Required Employees − Allocated Employees
+
+            <br><br>
+
+            A positive gap means additional employees are required
+            for that skill.
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

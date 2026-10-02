@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Add Workforce Demand</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            padding: 40px;
+        }
+
+        .container {
+            width: 450px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+        }
+
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 7px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 12px;
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #219150;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #555;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>Add Workforce Demand</h2>
+
+    <form method="POST">
+
+        <label>Demand Month</label>
+
+        <input
+            type="date"
+            name="demand_month"
+            required
+        >
+
+        <label>Skill</label>
+
+        <select name="skill_id" required>
+
+            <option value="">
+                Select Skill
+            </option>
+
+            {% for skill in skills %}
+
+            <option value="{{ skill.skill_id }}">
+                {{ skill.skill_name }}
+            </option>
+
+            {% endfor %}
+
+        </select>
+
+        <label>Required Employees</label>
+
+        <input
+            type="number"
+            name="required_employees"
+            min="1"
+            required
+        >
+
+        <button type="submit">
+            Add Workforce Demand
+        </button>
+
+    </form>
+
+    <a href="/workforce-demand" class="back">
+        ← Back to Workforce Demand
+    </a>
+
+</div>
+
+</body>
+</html>

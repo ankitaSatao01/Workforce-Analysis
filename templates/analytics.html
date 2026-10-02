@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Workforce Analytics</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6fb;
+            margin: 0;
+            padding: 30px;
+            color: #222;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 30px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-top: 8px;
+        }
+
+        .back-button {
+            text-decoration: none;
+            background: #2563eb;
+            color: white;
+            padding: 11px 18px;
+            border-radius: 8px;
+        }
+
+
+        /* =========================
+           KPI CARDS
+        ========================= */
+
+        .kpi-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .kpi-card {
+            background: white;
+            padding: 22px;
+            border-radius: 14px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .kpi-card h3 {
+            margin: 0 0 12px 0;
+            font-size: 16px;
+            color: #555;
+        }
+
+        .kpi-value {
+            font-size: 30px;
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+
+        /* =========================
+           CHART CARDS
+        ========================= */
+
+        .chart-card {
+            background: white;
+            border-radius: 14px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .chart-card h2 {
+            margin-top: 0;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 400px;
+        }
+
+
+        /* =========================
+           FUTURE GAP TABLE
+        ========================= */
+
+        .gap-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .gap-table th {
+            background: #f1f5f9;
+            padding: 14px;
+            text-align: left;
+        }
+
+        .gap-table td {
+            padding: 14px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .gap {
+            color: #dc2626;
+            font-weight: bold;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 900px) {
+
+            .kpi-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .kpi-container {
+                grid-template-columns: 1fr;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+
+    <div class="header">
+
+        <div>
+
+            <h1>📊 Workforce Analytics</h1>
+
+            <div class="subtitle">
+                Analyze historical demand, AI forecasts and future workforce gaps.
+            </div>
+
+        </div>
+
+        <a href="{{ url_for('home') }}" class="back-button">
+            ← Dashboard
+        </a>
+
+    </div>
+
+
+    <!-- =========================
+         KPI CARDS
+    ========================= -->
+
+    <div class="kpi-container">
+
+
+        <div class="kpi-card">
+
+            <h3>👥 Total Employees</h3>
+
+            <div class="kpi-value">
+                {{ total_employees }}
+            </div>
+
+        </div>
+
+
+        <div class="kpi-card">
+
+            <h3>📈 Demand Records</h3>
+
+            <div class="kpi-value">
+                {{ total_demand_records }}
+            </div>
+
+        </div>
+
+
+        <div class="kpi-card">
+
+            <h3>🤖 AI Forecasts</h3>
+
+            <div class="kpi-value">
+                {{ total_forecasts }}
+            </div>
+
+        </div>
+
+
+        <div class="kpi-card">
+
+            <h3>⚠️ Future Workforce Gap</h3>
+
+            <div class="kpi-value">
+                {{ total_future_gap }}
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         HISTORICAL DEMAND CHART
+    ========================= -->
+
+    <div class="chart-card">
+
+        <h2>📈 Historical Workforce Demand</h2>
+
+        <div class="chart-container">
+
+            <canvas id="historicalChart"></canvas>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         AI FORECAST CHART
+    ========================= -->
+
+    <div class="chart-card">
+
+        <h2>🤖 AI Predicted Workforce Demand</h2>
+
+        <div class="chart-container">
+
+            <canvas id="forecastChart"></canvas>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         HISTORICAL VS AI COMPARISON
+    ========================= -->
+
+    <div class="chart-card">
+
+        <h2>📊 Historical vs AI Workforce Demand</h2>
+
+        <div class="chart-container">
+
+            <canvas id="comparisonChart"></canvas>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         WORKFORCE GAP CHART
+    ========================= -->
+
+    <div class="chart-card">
+
+        <h2>📊 Skill-wise Workforce Gap</h2>
+
+        <div class="chart-container">
+
+            <canvas id="gapChart"></canvas>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         FUTURE WORKFORCE GAP TABLE
+    ========================= -->
+
+    <div class="chart-card">
+
+        <h2>⚠️ Future Workforce Gap</h2>
+
+        <table class="gap-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>Skill</th>
+
+                    <th>AI Predicted Demand</th>
+
+                    <th>Allocated Employees</th>
+
+                    <th>Future Gap</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for gap in future_gaps %}
+
+                <tr>
+
+                    <td>
+                        <strong>{{ gap.skill_name }}</strong>
+                    </td>
+
+                    <td>
+                        {{ gap.predicted_demand }}
+                    </td>
+
+                    <td>
+                        {{ gap.allocated_employees }}
+                    </td>
+
+                    <td class="gap">
+                        {{ gap.future_resource_gap }}
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+
+    // ==============================
+    // HISTORICAL DEMAND DATA
+    // ==============================
+
+    const historicalLabels = [
+
+        {% for item in historical_demand %}
+
+            "{{ item.demand_month }}",
+
+        {% endfor %}
+
+    ];
+
+
+    const historicalValues = [
+
+        {% for item in historical_demand %}
+
+            {{ item.required_employees }},
+
+        {% endfor %}
+
+    ];
+
+
+    // ==============================
+    // HISTORICAL WORKFORCE DEMAND
+    // ==============================
+
+    new Chart(
+
+        document.getElementById("historicalChart"),
+
+        {
+
+            type: "line",
+
+            data: {
+
+                labels: historicalLabels,
+
+                datasets: [
+
+                    {
+
+                        label: "Required Employees",
+
+                        data: historicalValues,
+
+                        tension: 0.3
+
+                    }
+
+                ]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                scales: {
+
+                    y: {
+
+                        beginAtZero: true,
+
+                        title: {
+
+                            display: true,
+
+                            text: "Employees"
+
+                        }
+
+                    },
+
+                    x: {
+
+                        title: {
+
+                            display: true,
+
+                            text: "Month"
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    );
+
+
+    // ==============================
+    // AI FORECAST DATA
+    // ==============================
+
+    const forecastLabels = [
+
+        {% for item in forecast_data %}
+
+            "{{ item.skill_name }}",
+
+        {% endfor %}
+
+    ];
+
+
+    const forecastValues = [
+
+        {% for item in forecast_data %}
+
+            {{ item.predicted_demand }},
+
+        {% endfor %}
+
+    ];
+
+
+    // ==============================
+    // AI FORECAST CHART
+    // ==============================
+
+    new Chart(
+
+        document.getElementById("forecastChart"),
+
+        {
+
+            type: "bar",
+
+            data: {
+
+                labels: forecastLabels,
+
+                datasets: [
+
+                    {
+
+                        label: "AI Predicted Demand",
+
+                        data: forecastValues
+
+                    }
+
+                ]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                scales: {
+
+                    y: {
+
+                        beginAtZero: true,
+
+                        title: {
+
+                            display: true,
+
+                            text: "Employees"
+
+                        }
+
+                    },
+
+                    x: {
+
+                        title: {
+
+                            display: true,
+
+                            text: "Skills"
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    );
+
+
+    // ==============================
+    // HISTORICAL VS AI COMPARISON
+    // ==============================
+
+    const comparisonLabels = [
+
+        {% for item in forecast_data %}
+
+            "{{ item.skill_name }}",
+
+        {% endfor %}
+
+    ];
+
+
+    const comparisonHistorical = [
+
+        {% for forecast in forecast_data %}
+
+            {% set ns = namespace(latest=0) %}
+
+            {% for historical in historical_demand %}
+
+                {% if historical.skill_name == forecast.skill_name %}
+
+                    {% set ns.latest = historical.required_employees %}
+
+                {% endif %}
+
+            {% endfor %}
+
+            {{ ns.latest }},
+
+        {% endfor %}
+
+    ];
+
+
+    const comparisonForecast = [
+
+        {% for item in forecast_data %}
+
+            {{ item.predicted_demand }},
+
+        {% endfor %}
+
+    ];
+
+
+    // ==============================
+    // COMPARISON CHART
+    // ==============================
+
+    new Chart(
+
+        document.getElementById("comparisonChart"),
+
+        {
+
+            type: "bar",
+
+            data: {
+
+                labels: comparisonLabels,
+
+                datasets: [
+
+                    {
+
+                        label: "Historical Demand",
+
+                        data: comparisonHistorical
+
+                    },
+
+                    {
+
+                        label: "AI Predicted Demand",
+
+                        data: comparisonForecast
+
+                    }
+
+                ]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                scales: {
+
+                    y: {
+
+                        beginAtZero: true,
+
+                        title: {
+
+                            display: true,
+
+                            text: "Employees"
+
+                        }
+
+                    },
+
+                    x: {
+
+                        title: {
+
+                            display: true,
+
+                            text: "Skills"
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    );
+
+
+    // ==============================
+    // FUTURE WORKFORCE GAP DATA
+    // ==============================
+
+    const gapLabels = [
+
+        {% for gap in future_gaps %}
+
+            "{{ gap.skill_name }}",
+
+        {% endfor %}
+
+    ];
+
+
+    const gapValues = [
+
+        {% for gap in future_gaps %}
+
+            {{ gap.future_resource_gap }},
+
+        {% endfor %}
+
+    ];
+
+
+    // ==============================
+    // WORKFORCE GAP CHART
+    // ==============================
+
+    new Chart(
+
+        document.getElementById("gapChart"),
+
+        {
+
+            type: "bar",
+
+            data: {
+
+                labels: gapLabels,
+
+                datasets: [
+
+                    {
+
+                        label: "Future Workforce Gap",
+
+                        data: gapValues
+
+                    }
+
+                ]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                scales: {
+
+                    y: {
+
+                        beginAtZero: true,
+
+                        title: {
+
+                            display: true,
+
+                            text: "Employees"
+
+                        }
+
+                    },
+
+                    x: {
+
+                        title: {
+
+                            display: true,
+
+                            text: "Skills"
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    );
+
+
+</script>
+
+
+</body>
+
+</html>

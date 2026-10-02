@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Project</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            padding: 40px;
+        }
+
+        .container {
+            width: 450px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+        }
+
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 7px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 12px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>Add New Project</h2>
+
+    <form method="POST">
+
+        <label>Project Name</label>
+        <input type="text"
+               name="project_name"
+               placeholder="Enter project name"
+               required>
+
+        <label>Client Name</label>
+        <input type="text"
+               name="client_name"
+               placeholder="Enter client name"
+               required>
+
+        <label>Start Date</label>
+        <input type="date"
+               name="start_date"
+               required>
+
+        <label>End Date</label>
+        <input type="date"
+               name="end_date"
+               required>
+
+        <label>Required Team Size</label>
+        <input type="number"
+               name="required_team_size"
+               min="1"
+               required>
+
+        <button type="submit">
+            Add Project
+        </button>
+
+    </form>
+
+    <a href="/projects" class="back">
+        ← Back to Projects
+    </a>
+
+</div>
+
+</body>
+</html>
